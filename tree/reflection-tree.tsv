@@ -1,0 +1,41 @@
+id	parentId	type	text	options	target	signal
+START	null	start	Good evening. Let’s look at your day.			
+A1_OPEN	START	question	First, one word for today:	Smooth|Productive|Mixed|Tough|Frustrating		
+A1_D1	A1_OPEN	decision		answer=Smooth|Productive:A1_Q_AGENCY_HIGH;answer=Mixed:A1_Q_AGENCY_MID;answer=Tough|Frustrating:A1_Q_AGENCY_LOW		axis1:internal
+A1_Q_AGENCY_HIGH	A1_D1	question	You said “{A1_OPEN.answer}”. What mostly made the good parts happen?	I prepared / executed well|I asked for help early|The team carried it|It was luck / timing		axis1:internal
+A1_Q_AGENCY_MID	A1_D1	question	You said “{A1_OPEN.answer}”. What best explains the mix?	Some things I controlled, some I didn’t|I executed, but priorities shifted|Others blocked progress|I didn’t plan well		axis1:internal
+A1_Q_AGENCY_LOW	A1_D1	question	You said “{A1_OPEN.answer}”. When things got difficult, what was your first instinct?	Focus on what I can control|Wait for someone to step in|Push through alone|Replay what others did wrong		axis1:external
+A1_Q_RESPONSE_STYLE	A1_Q_AGENCY_HIGH	question	When a problem showed up, what was your response style?	I reframed it and tried a new approach|I asked a clarifying question|I avoided it until later|I felt stuck and spun in my head		axis1:internal
+A1_Q_TRIGGER	A1_Q_AGENCY_LOW	question	What felt most “out of your hands” today?	A decision someone else made|A dependency / handoff|A surprise constraint (time, tools, info)|My own energy / mood		axis1:external
+A1_Q_CHOICE	A1_Q_TRIGGER	question	Even if it was unfair, where did you still have a small choice?	How I communicated|What I did first|What I asked for|I don’t think I had a choice		axis1:internal
+A1_Q_REPAIR	A1_Q_CHOICE	question	If you replay the hardest moment, what would be the most useful next-time adjustment?	Prepare earlier|Ask sooner|Name the risk out loud|Protect focus / say no		axis1:internal
+A1_Q_CONTROL	A1_Q_AGENCY_MID	question	What was the most controllable lever you actually pulled today?	Planning|Communication|Execution quality|Emotional regulation		axis1:internal
+A1_D_SUMMARY	A1_Q_REPAIR	decision		dominant=internal:A1_R_INT;dominant=external:A1_R_EXT		
+A1_D_SUMMARYB	A1_Q_CONTROL	decision		dominant=internal:A1_R_INT;dominant=external:A1_R_EXT		
+A1_D_SUMMARYC	A1_Q_RESPONSE_STYLE	decision		dominant=internal:A1_R_INT;dominant=external:A1_R_EXT		
+A1_R_INT	A1_D_SUMMARY	reflection	You’re noticing **agency**: even on a messy day, you can usually name a lever you pulled (or could pull). That’s not self-blame — it’s steering.		axis1:internal
+A1_R_EXT	A1_D_SUMMARY	reflection	A tough day can pull attention to what others did or didn’t do. Fair. Let’s still capture one choice you *did* have — even if it was small — so tomorrow has a handle.		axis1:external
+BRIDGE_1_2	A1_R_INT	bridge	Now let’s shift: not just what happened to you — but what you gave.		A2_OPEN
+BRIDGE_1_2B	A1_R_EXT	bridge	Now let’s shift: not just what happened to you — but what you gave.		A2_OPEN
+A2_OPEN	null	question	Think of one interaction today. Which feels closest?	I helped someone|I needed support|I taught / unblocked someone|I felt overlooked		
+A2_Q_MOMENT	A2_OPEN	question	Which moment best captures your orientation today?	I stepped up without being asked|I did my part, nothing extra|I kept score of effort/fairness|I expected recognition/resources		axis2:contribution
+A2_Q_LENS	A2_Q_MOMENT	question	When you think “I deserved more”, what was it mostly about?	Credit / visibility|Compensation / resources|Respect / tone|Workload fairness		axis2:entitlement
+A2_Q_GIVE	A2_Q_LENS	question	If you had to pick one “give” you’re proud of today, what is it?	Helped a teammate|Improved a process|Protected quality|Supported morale		axis2:contribution
+A2_Q_RECEIVE	A2_Q_LENS	question	If you had to pick one “receive” you wanted today, what is it?	Clear direction|More support|More recognition|Less friction		axis2:entitlement
+A2_D_SUMMARY	A2_Q_GIVE	decision		dominant=contribution:A2_R_CONTRIB;dominant=entitlement:A2_R_ENTITLE		
+A2_D_SUMMARYB	A2_Q_RECEIVE	decision		dominant=contribution:A2_R_CONTRIB;dominant=entitlement:A2_R_ENTITLE		
+A2_R_CONTRIB	A2_D_SUMMARY	reflection	You leaned toward **contribution** today. That’s a strong meaning-source: you can’t control every outcome, but you can control what you add.		axis2:contribution
+A2_R_ENTITLE	A2_D_SUMMARY	reflection	You leaned toward **expectation/entitlement** today — which often signals a real need (clarity, fairness, recognition). The key is to convert “what I’m owed” into “what I can ask for + what I can give.”		axis2:entitlement
+BRIDGE_2_3	A2_R_CONTRIB	bridge	Last axis: widen the frame. How did today affect *others*?		A3_OPEN
+BRIDGE_2_3B	A2_R_ENTITLE	bridge	Last axis: widen the frame. How did today affect *others*?		A3_OPEN
+A3_OPEN	null	question	When you think about today’s biggest challenge, who comes to mind first?	Just me|My team|A specific colleague|The customer/end user		
+A3_Q_SCOPE	A3_OPEN	question	Which perspective did you spend the most time in today?	My stress / workload|Our coordination / team flow|Someone else’s constraints|Customer impact / long-term value		axis3:self
+A3_Q_NEXT	A3_Q_SCOPE	question	What’s the healthiest “next thought” you can choose for tonight?	What can I do differently tomorrow?|Who might need a check-in from me?|What does success look like for the user?|What can I let go of?		axis3:altro
+A3_Q_ACT	A3_Q_NEXT	question	Pick one small action (2–10 min) you’d actually do.	Write one clarifying message|Document one thing for others|Ask for one specific input|Plan the first 15 minutes tomorrow		axis3:altro
+A3_D_SUMMARY	A3_Q_ACT	decision		dominant=altro:A3_R_ALTRO;dominant=self:A3_R_SELF		
+A3_R_ALTRO	A3_D_SUMMARY	reflection	You widened your **radius** today. That tends to reduce suffering: your day becomes part of a shared mission, not a solo fight.		axis3:altro
+A3_R_SELF	A3_D_SUMMARY	reflection	Your frame stayed mostly **self-focused** today — often a sign you were overloaded. The reframe isn’t “ignore yourself”, it’s “include others too” so the story isn’t only pressure.		axis3:self
+SUMMARY	A3_R_ALTRO	summary	Summary: You described today as “{A1_OPEN.answer}”. Axis 1 (agency): **{axis1.dominant}**. Axis 2 (orientation): **{axis2.dominant}**. Axis 3 (radius): **{axis3.dominant}**. One thing to carry: {summary_reflection}		
+SUMMARYB	A3_R_SELF	summary	Summary: You described today as “{A1_OPEN.answer}”. Axis 1 (agency): **{axis1.dominant}**. Axis 2 (orientation): **{axis2.dominant}**. Axis 3 (radius): **{axis3.dominant}**. One thing to carry: {summary_reflection}		
+END	SUMMARY	end	See you tomorrow.		
+END2	SUMMARYB	end	See you tomorrow.		
